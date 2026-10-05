@@ -1,0 +1,93 @@
+/*
+
+    ecpc - Amstrad CPC emulator
+
+    Copyright (C) 2026  Ian Cowburn <deathstation9000@gmail.com>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    -------------------------------------------------------------------------
+
+    Usual library wrappers and utils
+
+*/
+
+#ifndef ECPC_UTIL_H
+#define ECPC_UTIL_H
+
+#include <stdlib.h>
+
+/* ---------------------------------------- INTERFACES
+*/
+
+/* Returns result from malloc(size), calling Exit() if it fails.
+*/
+void		*Malloc(size_t size);
+
+
+/* Returns result from realloc(p,size), calling Exit() if it fails.
+*/
+void		*Realloc(void *p, size_t size);
+
+
+/* Copies a string.  The result must be freed.
+*/
+char		*StrCopy(const char *source);
+
+
+/* Safely copies a string.  The destination is returned.
+*/
+char		*SafeStrCopy(char *destination,
+                             const char *source,
+                             size_t destination_size);
+
+
+/* Returns the filename portion of path.  Note returned pointer is pointing
+   inside of path.
+*/
+const char	*Basename(const char *path);
+
+
+/* Returns the directory portion of path.  Note returned pointer is internal
+   static storage.  If there are no directory seperators in path, "." is
+   returned.
+*/
+const char	*Dirname(const char *path);
+
+
+/* Writes the passed text to debug.txt.  Note this is interface is not
+   able to be switched on/off, so debug is only used in a transient way
+   (once the bug is fixed, calls to this should be removed).
+*/
+void		Debug(const char *format,...);
+
+
+/* See if the passed strings match, case insensitive, up to the passed length.
+   Returns TRUE if they match, otherwise FALSE.  If nul is hit before the
+   length then just up to that is checked.
+*/
+int		StartsWith(const char *a, const char *b, size_t len);
+
+
+/* Return TRUE if a file exists.  Existance is no indication it can be
+   written to.
+*/
+int		FileExists(const char *path);
+
+
+#endif
+
+
+/* END OF FILE */
