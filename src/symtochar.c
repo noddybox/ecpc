@@ -74,6 +74,35 @@ static struct
 
     {SDLK_SPACE,	' '},
 
+    {SDLK_EXCLAIM,	'!'},
+    {SDLK_QUOTEDBL,	'"'},
+    {SDLK_HASH,		'#'},
+    {SDLK_PERCENT,	'%'},
+    {SDLK_DOLLAR,	'$'},
+    {SDLK_AMPERSAND,	'&'},
+    {SDLK_QUOTE,	'\''},
+    {SDLK_LEFTPAREN,	'('},
+    {SDLK_RIGHTPAREN,	')'},
+    {SDLK_ASTERISK,	'*'},
+    {SDLK_PLUS,		'+'},
+    {SDLK_COMMA,	','},
+    {SDLK_MINUS,	'-'},
+    {SDLK_PERIOD,	'.'},
+    {SDLK_SLASH,	'/'},
+    {SDLK_COLON,	':'},
+    {SDLK_SEMICOLON,	';'},
+    {SDLK_LESS,		'<'},
+    {SDLK_EQUALS,	'='},
+    {SDLK_GREATER,	'>'},
+    {SDLK_QUESTION,	'?'},
+    {SDLK_AT,		'@'},
+    {SDLK_LEFTBRACKET,	'['},
+    {SDLK_BACKSLASH,	'\\'},
+    {SDLK_RIGHTBRACKET,	']'},
+    {SDLK_CARET,	'^'},
+    {SDLK_UNDERSCORE,	'_'},
+    {SDLK_BACKQUOTE,	'`'},
+
     {SDLK_UNKNOWN,	0}
 };
 
