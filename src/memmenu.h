@@ -20,34 +20,29 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Provides a menu driven interface for analysing memory
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
+#ifndef ECPC_MEMMENU_H
+#define ECPC_MEMMENU_H
+
+#include "z80.h"
+
+
+/* Memory menu.  Returns TRUE if exit (from program) selected.
 */
-void		ConfigRead(void);
+int		MemoryMenu(Z80 *z80);
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
+
+/* Display the state of the CPC at the bottom of the screen
 */
-const char	*ConfigValue(const char *section, const char *name);
+void		DisplayState(Z80 *z80);
 
 
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
+/* Non-NULL (the breakpoint hit) if a breakpoint has been hit
 */
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
+const char	*Break(void);
 
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
 
 #endif

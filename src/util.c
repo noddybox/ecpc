@@ -154,6 +154,18 @@ int StartsWith(const char *a, const char *b, size_t len)
 }
 
 
+int Equal(const char *a, const char *b)
+{
+    while(*a && *b && tolower((unsigned char)*a) == tolower((unsigned char)*b))
+    {
+	a++;
+	b++;
+    }
+
+    return *a == 0 && *b == 0;
+}
+
+
 int FileExists(const char *path)
 {
     FILE *fp;
@@ -167,6 +179,3 @@ int FileExists(const char *path)
 
     return fp != NULL;
 }
-
-
-/* END OF FILE */

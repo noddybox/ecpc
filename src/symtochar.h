@@ -20,34 +20,20 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Convert an SDL keysym into a char
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
+#ifndef ECPC_SYMTOCHAR_H
+#define ECPC_SYMTOCHAR_H
+
+#include <SDL_keyboard.h>
+
+/* ---------------------------------------- INTERFACES
 */
-void		ConfigRead(void);
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
+/* Convert a SDL keysym to a char.  Returns 0 if there is no mapping.
 */
-const char	*ConfigValue(const char *section, const char *name);
-
-
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
-*/
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
-
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
+char		SYMToChar(SDL_Keycode keysym);
 
 #endif

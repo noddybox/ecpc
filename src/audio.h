@@ -20,34 +20,31 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Audio handling
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
+#ifndef ECPC_AUDIO_H
+#define ECPC_AUDIO_H
+
+#include <stdlib.h>
+#include <SDL.h>
+
+/* ---------------------------------------- INTERFACES
 */
-void		ConfigRead(void);
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
+/* Initialise the audio interface.  Returns FALSE on failure to open
+   audio.  All other interfaces will silently do nothing if the device
+   can't be opened.
 */
-const char	*ConfigValue(const char *section, const char *name);
+int		AUDIOInit(int frequency);
 
 
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
+/* Add the passed buffer to the sound queue.  It is a signed 8-bit mono
+   sample which will be converted as appropriate by the audio interface.
+   Well turns out SDL does that for you.
 */
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
+void		AUDIOQueue(Sint8 *buffer, size_t len);
 
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
 
 #endif

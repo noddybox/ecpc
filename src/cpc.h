@@ -64,6 +64,3 @@ void		CPCReset(Z80 *z80);
 int		CPCAudioFrequency(void);
 
 #endif
-
-
-/* END OF FILE */

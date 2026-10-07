@@ -20,34 +20,62 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
-
+    Provides the emulation for the CPC
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
+#include "cpc.h"
+
+/* ---------------------------------------- EXPORTED FUNCTIONS
 */
-void		ConfigRead(void);
+void CPCInit(Z80 *z80)
+{
+}
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
-*/
-const char	*ConfigValue(const char *section, const char *name);
+void CPCKeyEvent(SDL_Event *e)
+{
+}
 
+Z80Byte CPCPeek(Z80 *z80, Z80Word addr)
+{
+    return 0;
+}
 
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
-*/
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
+void CPCPoke(Z80 *z80, Z80Word addr, Z80Byte val)
+{
+}
 
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
+Z80Byte CPCReadPort(Z80 *z80, Z80Word port)
+{
+    return 0;
+}
 
-#endif
+void CPCWritePort(Z80 *z80, Z80Word port, Z80Byte val)
+{
+}
+
+const Z80Label *CPCGetLabel(void)
+{
+    return NULL;
+}
+
+const char *CPCInfo(Z80 *z80)
+{
+    return "";
+}
+
+void CPCEnableScreen(int enable)
+{
+}
+
+void CPCShowScreen(void)
+{
+}
+
+void CPCReset(Z80 *z80)
+{
+}
+
+int CPCAudioFrequency(void)
+{
+    return 44100;
+}

@@ -124,11 +124,12 @@ static void BMPlot(int x, int y, uint8_t col)
 void GFXInit(void)
 {
     int f;
+    int fullscreen = ConfigValueBool("General", "Fullscreen", FALSE);
 
-    if (IConfig(CONF_FULLSCREEN))
+    if (fullscreen)
 	scale=1;
     else
-	scale=IConfig(CONF_SCALE);
+	scale=ConfigValueInt("General", "Scale", 1);
 
     if (scale<0)
     	scale=1;
@@ -138,9 +139,9 @@ void GFXInit(void)
     else
     	putpixel=normal_putpixel;
 
-    frame=1000/IConfig(CONF_FRAMES_PER_SEC);
+    frame=1000/ConfigValueInt("General", "FramesPerSecond", 50);
 
-    if (IConfig(CONF_SOUND))
+    if (ConfigValueBool("General", "Sound", TRUE))
     {
 	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO|SDL_INIT_AUDIO))
 	    Exit("Failed to init SDL: %s\n",SDL_GetError());
@@ -152,13 +153,12 @@ void GFXInit(void)
     }
 
 
-    if (!(window=SDL_CreateWindow("eSPEC",
+    if (!(window=SDL_CreateWindow("eCPC",
                                   SDL_WINDOWPOS_UNDEFINED,
                                   SDL_WINDOWPOS_UNDEFINED,
                                   GFX_WIDTH*scale,
 				  GFX_HEIGHT*scale,
-				  IConfig(CONF_FULLSCREEN) ?
-				   		SDL_WINDOW_FULLSCREEN : 0)))
+				  fullscreen ? SDL_WINDOW_FULLSCREEN : 0)))
     {
 	Exit("Failed to open window: %s\n",SDL_GetError());
     }
@@ -364,21 +364,3 @@ void GFXPrintPaper(int x, int y, Uint32 col, Uint32 paper,
 	x+=8;
     }
 }
-
-
-void GFXBitmap(const GFX_Bitmap *bitmap)
-{
-    int cx = (GFX_WIDTH - bitmap->width) / 2;
-    int cy = (GFX_HEIGHT - bitmap->height) / 2;
-
-    for(int y = 0; y < bitmap->height; y++)
-    {
-	for(int x = 0; x < bitmap->width; x++)
-	{
-	    putpixel(cx + x, cy + y,bmpix[GFX_BITMAP_AT(*bitmap, x, y)].col);
-	}
-    }
-}
-
-
-/* END OF FILE */

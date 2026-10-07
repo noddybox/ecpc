@@ -20,34 +20,29 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Provides a common error exit point
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
+#include <stdlib.h>
+#include <stdarg.h>
+#include "exit.h"
 
-/* Read the config if there
+#include <SDL.h>
+
+/* ---------------------------------------- EXPORTED INTERFACES
 */
-void		ConfigRead(void);
+void Exit(const char *format,...)
+{
+    va_list va;
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
-*/
-const char	*ConfigValue(const char *section, const char *name);
+    if (SDL_WasInit(SDL_INIT_EVERYTHING))
+    {
+    	SDL_Quit();
+    }
 
+    va_start(va,format);
+    vfprintf(stderr,format,va);
+    va_end(va);
 
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
-*/
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
-
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
-
-#endif
+    exit(EXIT_FAILURE);
+}

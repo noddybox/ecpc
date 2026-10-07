@@ -29,43 +29,22 @@ CFLAGS	=	-g -O2
 TARGET	=	ecpc
 
 SOURCE	=	main.c		\
-		spec.c		\
-		snap.c		\
+		cpc.c		\
 		config.c	\
 		gfx.c		\
 		gui.c		\
-		memmenu.c	\
 		util.c		\
-		kbbmp.c		\
 		exit.c		\
-		tape.c		\
 		symtochar.c	\
 		font.c	        \
-		audio.c	        \
 		expr.c		\
+		audio.c		\
+		memmenu.c	\
 		z80.c		\
 		z80_decode.c	\
 		z80_dis.c
 
-OBJECTS	=	main.o		\
-		spec.o		\
-		snap.o		\
-		config.o	\
-		gfx.o		\
-		gui.o		\
-		memmenu.o	\
-		util.o		\
-		kbbmp.o		\
-		exit.o		\
-		tape.o		\
-		symtochar.o	\
-		font.o	        \
-		audio.o	        \
-		expr.o		\
-		z80.o		\
-		z80_decode.o	\
-		z80_dis.o	\
-		gfx-bitmap.o
+OBJECTS	=	$(SOURCE:.c=.o)
 
 CFLAGS +=	`sdl2-config --cflags` -Igfx-bitmap -DENABLE_DISASSEM
 
@@ -74,19 +53,10 @@ LIBS	=	`sdl2-config --libs`
 $(TARGET): $(OBJECTS) 
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
 
-depend.mak: $(SOURCE) *.h
+depend.mak: $(SOURCE)
 	$(CC) -MM $(SOURCE) > depend.mak || true
-
-kbbmp.c: ../gfx/keyb.gfxbmp
-	cfile8 -h template -c template ../gfx/keyb.gfxbmp kbbmp.c keyboard_bitmap
-
-../gfx/keyb.gfxbmp: ../gfx/keyb.png
-	cd ../gfx ; $(MAKE)
 
 clean:
 	rm -f $(TARGET) $(TARGET).exe $(OBJECTS) core
-
-gfx-bitmap.o: gfx-bitmap/gfx-bitmap.c gfx-bitmap/gfx-bitmap.h
-	$(CC) -c -o gfx-bitmap.o gfx-bitmap/gfx-bitmap.c
 
 include depend.mak

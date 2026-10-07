@@ -28,17 +28,14 @@
 #include <SDL.h>
 
 #include "z80.h"
-#include "spec.h"
+#include "cpc.h"
 #include "gfx.h"
 #include "gui.h"
 #include "memmenu.h"
 #include "config.h"
-#include "kbbmp.h"
 #include "exit.h"
-#include "tape.h"
 #include "util.h"
 #include "audio.h"
-#include "gfx-bitmap.h"
 
 /* ---------------------------------------- MACROS
 */
@@ -64,7 +61,7 @@ static Uint32	grey;
 */
 static void Usage(void)
 {
-    fprintf(stderr,"usage: espec [-m] [-l tape_file] [-s tape_file]\n");
+    fprintf(stderr,"usage: ecpc [-m] [-l tape_file] [-s tape_file]\n");
     exit(EXIT_FAILURE);
 }
 
@@ -79,35 +76,26 @@ int main(int argc, char *argv[])
     int trace;
     int inital_menu;
     int f;
-    GFX_Bitmap bitmap;
 
     ConfigRead();
 
-    trace=IConfig(CONF_TRACE);
+    trace = FALSE;
 
-    z80=Z80Init(SPECPeek,SPECPoke,SPECReadPort,SPECWritePort,SPECDisPeek);
+    z80=Z80Init(CPCPeek,CPCPoke,CPCReadPort,CPCWritePort,CPCDisPeek);
 
-    Z80SetLabels(z80,SPECGetLabel());
-
-    if (GFX_Bitmap_Decode(keyboard_bitmap,
-    			  KEYBOARD_BITMAP_LEN,
-			  &bitmap) != eGFX_Ok)
-    {
-	fprintf(stderr, "error: failed to decoded keyboard bitmap\n");
-	return EXIT_FAILURE;
-    }
+    Z80SetLabels(z80,CPCGetLabel());
 
     GFXInit();
 
-    if (IConfig(CONF_SOUND))
+    if (ConfigValueBool("General", "Sound", TRUE))
     {
-    	if (!AUDIOInit(SPECAudioFrequency()))
+    	if (!AUDIOInit(CPCAudioFrequency()))
 	{
 	    fprintf(stderr, "warning: couldn't initialise audio\n");
 	}
     }
 
-    SPECInit(z80);
+    CPCInit(z80);
 
     white=GFXRGB(255,255,255);
     grey=GFXRGB(128,128,128);
@@ -134,7 +122,7 @@ int main(int argc, char *argv[])
 		    Usage();
 		}
 
-                TAPEMount(TAP_IN, argv[++f]);
+                /* TAPEMount(TAP_IN, argv[++f]); */
 		break;
 
 	    case 's':
@@ -143,7 +131,7 @@ int main(int argc, char *argv[])
 		    Usage();
 		}
 
-                TAPEMount(TAP_OUT, argv[++f]);
+                /* TAPEMount(TAP_OUT, argv[++f]); */
 		break;
 
 	    default:
@@ -207,8 +195,8 @@ int main(int argc, char *argv[])
 		case SDLK_F2:
 		    if (e->key.state==SDL_PRESSED)
 			GUIMessage(eMessageBox,
-				   "espec - ZX Spectrum Emulator",
-				   "(c) 2004-2026 Ian Cowburn "
+				   "ecpc - Amstrad CPC Emulator",
+				   FONT_COPYRIGHT " 2026 Ian Cowburn "
 				   ECPC_VERSION "\n"
 				   " \n"
 				   "This software comes with ABSOLUTELY \n"
@@ -226,39 +214,32 @@ int main(int argc, char *argv[])
 				   "Boston, MA 02111-1307 USA           ");
 		    break;
 
-		case SDLK_F3:
-		    if (e->key.state==SDL_PRESSED)
-		    {
-			GFXBitmap(&bitmap);
-			GFXEndFrame(FALSE);
-			GFXWaitKey();
-		    }
-		    break;
-
 		case SDLK_F4:
-                    TAPEDisplayInfo();
+                    /* TAPEDisplayInfo(); */
 		    break;
 
 
 		case SDLK_F8:
 		    if (e->key.state==SDL_PRESSED)
 		    {
-                        TAPESelectInput();
+                        /* TAPESelectInput(); */
 		    }
 		    break;
 
 		case SDLK_F9:
 		    if (e->key.state==SDL_PRESSED)
 		    {
-                        TAPESelectOutput();
+                        /* TAPESelectOutput(); */
 		    }
 		    break;
 
 		case SDLK_F10:
 		    if (e->key.state==SDL_PRESSED)
 		    {
+			/*
 			TAPEUnmount(TAP_IN);
 			TAPEUnmount(TAP_OUT);
+			*/
 		    }
 		    break;
 
@@ -273,17 +254,16 @@ int main(int argc, char *argv[])
 		    break;
 
 		default:
-		    SPECKeyEvent(e);
+		    CPCKeyEvent(e);
 		    break;
 	    }
 	}
     }
 
+    /*
     TAPEUnmount(TAP_IN);
     TAPEUnmount(TAP_OUT);
+    */
 
     return EXIT_SUCCESS;
 }
-
-
-/* END OF FILE */

@@ -81,6 +81,12 @@ void		Debug(const char *format,...);
 int		StartsWith(const char *a, const char *b, size_t len);
 
 
+/* See if the passed strings match, case insensitive.  Returns TRUE if they
+   match, otherwise FALSE.
+*/
+int		Equal(const char *a, const char *b);
+
+
 /* Return TRUE if a file exists.  Existance is no indication it can be
    written to.
 */
@@ -88,6 +94,3 @@ int		FileExists(const char *path);
 
 
 #endif
-
-
-/* END OF FILE */

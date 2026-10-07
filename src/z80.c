@@ -381,6 +381,3 @@ void Z80SetTimer(Z80 *cpu, Z80Timer timer, Z80Val value)
 {
     cpu->timer[timer] = value;
 }
-
-
-/* END OF FILE */

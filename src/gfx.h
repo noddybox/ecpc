@@ -28,24 +28,23 @@
 #define ECPC_GFX_H
 
 #include <SDL.h>
-#include "gfx-bitmap.h"
 
 
 /* ---------------------------------------- CONSTANTS
 */
-#define FONT_UP_ARROW		'\001'
-#define FONT_DOWN_ARROW		'\002'
-#define FONT_LEFT_ARROW		'\003'
-#define FONT_RIGHT_ARROW	'\004'
-#define FONT_TICK		'\005'
-#define FONT_CROSS		'\006'
-#define FONT_CURSOR		'\007'
-#define FONT_COPYRIGHT		'\010'
+#define FONT_UP_ARROW		"\001"
+#define FONT_DOWN_ARROW		"\002"
+#define FONT_LEFT_ARROW		"\003"
+#define FONT_RIGHT_ARROW	"\004"
+#define FONT_TICK		"\005"
+#define FONT_CROSS		"\006"
+#define FONT_CURSOR		"\007"
+#define FONT_COPYRIGHT		"\010"
 
 /* The size of the display
 */
-#define GFX_WIDTH		320
-#define GFX_HEIGHT		300
+#define GFX_WIDTH		800
+#define GFX_HEIGHT		600
 
 
 /* ---------------------------------------- INTERFACES
@@ -137,13 +136,4 @@ void		GFXPrint(int x, int y, Uint32 col, const char *format, ...);
 void		GFXPrintPaper(int x, int y, Uint32 col, Uint32 paper,
 			      const char *format, ...);
 
-
-/* Draws a simply bitmap centred on the screen
-*/
-void		GFXBitmap(const GFX_Bitmap *bitmap);
-
-
 #endif
-
-
-/* END OF FILE */

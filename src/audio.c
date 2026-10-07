@@ -20,34 +20,46 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Audio handling
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
+#include <SDL.h>
+
+#include "audio.h"
+#include "util.h"
+
+/* ---------------------------------------- INTERNAL DATA
 */
-void		ConfigRead(void);
+static SDL_AudioSpec		actual;
+static SDL_AudioDeviceID	device;
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
+
+/* ---------------------------------------- INTERFACES
 */
-const char	*ConfigValue(const char *section, const char *name);
+int AUDIOInit(int frequency)
+{
+    SDL_AudioSpec spec = {0};
 
+    spec.freq = frequency;
+    spec.format = AUDIO_S8;
+    spec.channels = 1;
+    spec.samples = 4096;
 
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
-*/
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
+    device = SDL_OpenAudioDevice(NULL, 0, &spec, &actual, 0);
 
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
+    if (device != 0)
+    {
+    	SDL_PauseAudioDevice(device, 0);
+    }
 
-#endif
+    return device != 0;
+}
+
+void AUDIOQueue(Sint8 *buffer, size_t len)
+{
+    if (device != 0)
+    {
+	SDL_QueueAudio(device, buffer, len);
+    }
+}

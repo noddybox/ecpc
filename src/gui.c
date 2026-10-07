@@ -188,8 +188,8 @@ static int DoList(const char *title, int no, char * const list[], int *option,
 		}
 
 		if (option)
-		    GFXPrintPaper(16,20+f*8,pen,paper,"%c %-34.34s",
-				  option[f+top] ? FONT_TICK:' ',list[f+top]);
+		    GFXPrintPaper(16,20+f*8,pen,paper,"%s %-34.34s",
+				  option[f+top] ? FONT_TICK:" ",list[f+top]);
 		else
 		    GFXPrintPaper(16,20+f*8,pen,paper,"%-36.36s",list[f+top]);
 	    }
@@ -200,7 +200,7 @@ static int DoList(const char *title, int no, char * const list[], int *option,
 	    static const int y_pos = GFX_HEIGHT - 44;
 
 	    GFXRect(8,y_pos,GFX_WIDTH-16,8,BLACK,TRUE);
-	    GFXPrint(8,y_pos,WHITE,"File: %s%c",input,FONT_CURSOR);
+	    GFXPrint(8,y_pos,WHITE,"File: %s%s",input,FONT_CURSOR);
 	}
 
 	GFXEndFrame(FALSE);
@@ -718,6 +718,3 @@ int GUIFileSelect(const char *prompt, int load,
 
     return ret;
 }
-
-
-/* END OF FILE */

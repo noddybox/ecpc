@@ -20,34 +20,15 @@
 
     -------------------------------------------------------------------------
 
-    Config routines
+    Internal font for gfx routines
 
 */
-#ifndef ECPC_CONFIG_H
-#define ECPC_CONFIG_H
 
-/* Read the config if there
-*/
-void		ConfigRead(void);
+#ifndef ECPC_FONT_H
+#define ECPC_FONT_H
 
-/* Get a value from the config, in section with name.  Returns NULL if no such
-   value.
-*/
-const char	*ConfigValue(const char *section, const char *name);
+typedef unsigned char	FontChar[64];
 
-
-/* Get a value from the config, in section with name, parsed as an integer.
-   Returns default_value if no such value.
-*/
-long 		ConfigValueInt(const char *section, const char *name,
-			       long default_value);
-
-/* Get a value from the config, in section with name, parsed as an boolean.
-   Returns default_flag if no such value.
-   "1", "true", "on", "yes" are counted as TRUE.
-   Anything else is counted as FALSE.
-*/
-int 		ConfigValueBool(const char *section, const char *name,
-			        int default_flag);
+extern const FontChar font[128];
 
 #endif
