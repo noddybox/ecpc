@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "config.h"
 #include "util.h"
@@ -73,11 +74,39 @@ static void Parse(FILE *fp)
 	    }
 	    else if (section)
 	    {
+		char *p = buff;
 		char *t1=NULL;
 		char *t2=NULL;
 
-		t1=strtok(buff,"\t ");
-		t2=strtok(NULL,"\t ");
+		while(*p && isspace((unsigned char)*p))
+		{
+		    p++;
+		}
+
+		if (*p)
+		{
+		    t1 = p;
+
+		    while(*p && *p != '=' && isprint((unsigned char)*p))
+		    {
+		    	p++;
+		    }
+
+		    if (*p)
+		    {
+		    	*p++ = 0;
+		    }
+
+		    while(*p && (*p == '=' || isspace((unsigned char)*p)))
+		    {
+		    	p++;
+		    }
+
+		    if (*p)
+		    {
+		    	t2 = p;
+		    }
+		}
 
 		if (t2)
 		{
