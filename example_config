@@ -1,0 +1,51 @@
+[General]
+# Whether to display fullscreen
+fullscreen = false
+
+# If windowed, the scaling factor per pixel
+scale = 3
+
+# Enable sounds?
+sound = on
+
+[CPC]
+# The model to emulate.  Allowed values:
+# 464, 664, 6128
+model = 464
+
+[464]
+# Required.  Path to BASIC ROM
+basic = /path/to/464.basic.rom
+
+# Required.  Path to firmware ROM
+firmware = /path/to/464.firmware.rom
+
+# Optional.  If defined enables the disk interface on the 464
+amsdos = /path/to/amsdos.rom
+
+[664]
+# Required.  Path to BASIC ROM
+basic = /path/to/664.basic.rom
+
+# Required.  Path to firmware ROM
+firmware = /path/to/664.firmware.rom
+
+# Required.  Path to the AMSDOS ROM
+amsdos = /path/to/amsdos.rom
+
+[6128]
+# Required.  Path to BASIC ROM
+basic = /path/to/6128.basic.rom
+
+# Required.  Path to firmware ROM
+firmware = /path/to/6128.firmware.rom
+
+# Required.  Path to the AMSDOS ROM
+amsdos = /path/to/amsdos.rom
+
+[ROMS]
+# A list of ROMs.  Each entry details the ROM number and a path to it.  The
+# items are checked from 0-255, so feasibly you could override the base ROMs
+# with these.
+
+5 = /path/to/maxam.rom.for.instance
